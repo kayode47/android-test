@@ -6,7 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "journey")
-public class Jounery {
+public class Journey {
 
     @ColumnInfo(name = "Id")
    @PrimaryKey(autoGenerate = true)
@@ -27,7 +27,7 @@ public class Jounery {
     @ColumnInfo(name = "Distance")
     private String distance;
 
-    public Jounery(int id, Double fromLatitude, Double fromLongitude, Double toLatitude, Double toLongitude, String distance) {
+    public Journey(int id, Double fromLatitude, Double fromLongitude, Double toLatitude, Double toLongitude, String distance) {
         this.id = id;
         this.fromLatitude = fromLatitude;
         this.fromLongitude = fromLongitude;

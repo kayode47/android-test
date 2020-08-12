@@ -10,12 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import ng.riby.androidtest.DB.AppDatabase;
-import ng.riby.androidtest.DB.Jounery;
+
+import ng.riby.androidtest.DB.Journey;
 
 
 import java.util.List;
 
-public class JouneryList extends AppCompatActivity {
+public class JourneyList extends AppCompatActivity {
     private static final String TAG ="JouneryList";
 
     RecyclerView recyclerView;
@@ -29,12 +30,12 @@ public class JouneryList extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewUsers);
 
         //get List from Database
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "jounery-database").allowMainThreadQueries().build();
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "journey-database").allowMainThreadQueries().build();
 
-        List<Jounery> jouneries = db.jouneryDao().getAllJounery();
+        List<Journey> journeys = db.jouneryDao().getAllJourney();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new JouneryAdapter(jouneries);
+        adapter = new JourneyAdapter(journeys);
         recyclerView.setAdapter(adapter);
 
     }

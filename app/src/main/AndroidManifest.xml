@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".JouneryList">
+        <activity android:name=".JourneyList">
 
         </activity>
         <meta-data

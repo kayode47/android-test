@@ -4,10 +4,13 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 
@@ -39,7 +42,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ng.riby.androidtest.DB.AppDatabase;
-import ng.riby.androidtest.DB.Jounery;
+
+import ng.riby.androidtest.DB.Journey;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    startActivity(new Intent(MainActivity.this, JouneryList.class));
+                    startActivity(new Intent(MainActivity.this, JourneyList.class));
                 }
             });
 
@@ -149,13 +153,22 @@ public class MainActivity extends AppCompatActivity {
 
     //Get Distance if Connect to the Internet
     private void getDis() {
-//        if(isOnline()){
-//            getDirection();
-//        }
-        getDirection();
+        if(isOnline()){
+            getDirection();
+        }
+//        getDirection();
         SaveDB();
     }
 
+    protected boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
     //check for Internet
@@ -165,15 +178,15 @@ public class MainActivity extends AppCompatActivity {
         urlString.append("?origin=");// from
         urlString.append(Double.toString(sourcelat));
         urlString.append(",");
-        urlString
-                .append(Double.toString( sourcelog));
+        urlString.append(Double.toString( sourcelog));
         urlString.append("&destination=");// to
-        urlString
-                .append(Double.toString( destlat));
+        urlString.append(Double.toString( destlat));
         urlString.append(",");
         urlString.append(Double.toString(destlog));
         urlString.append("&sensor=false&mode=driving&alternatives=true");
         urlString.append("&key=AIzaSyCJVpM7-ayGMraxFRzq4U8Dt1uRNsmiaws");
+//        urlString.append("&key=AIzaSyBFYfuDdqqhklC9tmaj0k_hC8gchsxI2-4");
+
         return urlString.toString();
     }
     //*
@@ -221,16 +234,18 @@ public class MainActivity extends AppCompatActivity {
     }
     //Insert into Database
     private void SaveDB() {
-        final AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "jounery-database")
-                // allow queries on the main thread.
-                // Don't do this on a real app! See PersistenceBasicSample for an example.
+        final AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "journey-database")
                 .allowMainThreadQueries()
                 .build();
 
-         txtdistance = String.valueOf(distance+" Meters");
+        if (distance==null){
+            txtdistance = "Not Defined";
+        }else {
+            txtdistance = String.valueOf(distance + " Meters");
+        }
 
-        Jounery jounery = new Jounery(id, fromLatitude, fromLongitude, toLatitude, toLatitude,txtdistance);
-        db.jouneryDao().insertAll(jounery);
+        Journey journey = new Journey(id, fromLatitude, fromLongitude, toLatitude, toLongitude,txtdistance);
+        db.jouneryDao().insertAll(journey);
 
         Toast.makeText(this,"Saved to Database",Toast.LENGTH_SHORT).show();
 

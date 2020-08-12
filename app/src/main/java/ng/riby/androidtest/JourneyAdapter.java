@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import ng.riby.androidtest.DB.Jounery;
+import ng.riby.androidtest.DB.Journey;
 
-public class JouneryAdapter extends RecyclerView.Adapter<JouneryAdapter.ViewHolder> {
+public class JourneyAdapter extends RecyclerView.Adapter<JourneyAdapter.ViewHolder> {
 
-    List<Jounery> jouneries;
-    public JouneryAdapter(List<Jounery> jouneries){
-        this.jouneries= jouneries;
+    List<Journey> journeys;
+    public JourneyAdapter(List<Journey> journeys){
+        this.journeys= journeys;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -31,18 +31,18 @@ public class JouneryAdapter extends RecyclerView.Adapter<JouneryAdapter.ViewHold
     @Override
     public void onBindViewHolder( ViewHolder holder, int position) {
 //        set adapter view
-        holder.fromLatitude.setText(String.valueOf(jouneries.get(position).getFromLatitude()));
-        holder.fromLongitude.setText(String.valueOf(jouneries.get(position).getFromLongitude()));
-        holder.toLatitude.setText(String.valueOf(jouneries.get(position).getToLatitude()));
-        holder.toLongitude.setText(String.valueOf(jouneries.get(position).getToLongitude()));
-        holder.distance.setText(String.valueOf(jouneries.get(position).getDistance()));
+        holder.fromLatitude.setText(String.valueOf(journeys.get(position).getFromLatitude()));
+        holder.fromLongitude.setText(String.valueOf(journeys.get(position).getFromLongitude()));
+        holder.toLatitude.setText(String.valueOf(journeys.get(position).getToLatitude()));
+        holder.toLongitude.setText(String.valueOf(journeys.get(position).getToLongitude()));
+        holder.distance.setText(journeys.get(position).getDistance());
 
     }
 
     @Override
     public int getItemCount() {
-        Log.v(JouneryAdapter.class.getSimpleName(),""+ jouneries.size());
-        return jouneries.size();
+        Log.v(JourneyAdapter.class.getSimpleName(),""+ journeys.size());
+        return journeys.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -59,7 +59,7 @@ public class JouneryAdapter extends RecyclerView.Adapter<JouneryAdapter.ViewHold
             fromLongitude= itemView.findViewById(R.id.tvfromLongitude);
             toLatitude= itemView.findViewById(R.id.tvtoLatitude);
             toLongitude= itemView.findViewById(R.id.tvtoLongitude);
-            toLongitude= itemView.findViewById(R.id.tvDistance);
+            distance= itemView.findViewById(R.id.tvDistance);
 
         }
     }
